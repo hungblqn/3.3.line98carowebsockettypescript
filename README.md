@@ -22,6 +22,9 @@ unit test bao gồm
 /src/game.gateway.spec.ts - test chức năng trò chơi line98
 /src/caro.gateway.spec.ts - test chức năng trò chơi caro
 
+line98 sẽ lưu trạng thái hiện tại của trò chơi vào csdl dựa theo tài khoản. người chơi có thể reset game để khởi động lại trò chơi mới
+caro sẽ cho phép người chơi vào queue, ghép 2 người queue gần nhất lại với nhau cho vào 1 phòng, x đi trước o đi sau. kết quả sẽ được lưu vào mongodb khi có 1 người thắng
+
 https://github.com/user-attachments/assets/bdd2a463-8d15-45fc-9472-748751bf00b4
 
 demo đăng ký đăng nhập đăng xuất 
