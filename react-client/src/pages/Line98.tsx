@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 const SIZE = 9;
+
+// Kết nối socket - token gửi qua query
 const socket = io("http://localhost:3000", {
   query: { token: localStorage.getItem("token") || "" },
 });
@@ -21,9 +23,12 @@ export default function Line98() {
   const [hint, setHint] = useState<{ from: [number, number]; to: [number, number] } | null>(null);
 
   useEffect(() => {
-    socket.on("boardUpdate", ({ board, nextBalls }: BoardUpdate) => {
-      setBoard(board);
-      setNextBalls(nextBalls);
+    socket.on("connect", () => console.log("Connected to Line98 server"));
+    socket.on("disconnect", () => console.log("Disconnected from Line98 server"));
+
+    socket.on("boardUpdate", ({ board: newBoard, nextBalls: newNextBalls }: BoardUpdate) => {
+      setBoard(newBoard);
+      setNextBalls(newNextBalls);
     });
 
     socket.on("pathStep", (data: { board: Ball[][] }) => {
@@ -50,8 +55,8 @@ export default function Line98() {
         alert("Không thể di chuyển vào ô đang chọn!");
         return;
       }
-      const token = localStorage.getItem("token");
-      socket.emit("moveBall", { from: selected, to: [r, c], token });
+      // Không cần token trong payload vì đã gửi trong query
+      socket.emit("moveBall", { from: selected, to: [r, c] });
       setSelected(null);
       setHint(null);
     } else if (board[r][c]) {
@@ -60,10 +65,7 @@ export default function Line98() {
   };
 
   const resetGame = () => {
-    const token = localStorage.getItem("token");
-    if (!token) return alert("Bạn chưa đăng nhập!");
-  
-    socket.emit("resetGame", { token });
+    socket.emit("resetGame");
   };
 
   const requestHelp = () => {
