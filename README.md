@@ -1,3 +1,7 @@
+# fix
+
+sửa code theo mô hình mvc cho 2 game line98 và caro, đồng thời viết lại unit test
+
 # 3.3.line98carowebsockettypescript
 
 Mã nguồn bao gồm server game nestjs và client react typescript, database là mongodb local (tailwindcss)
